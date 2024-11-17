@@ -8,10 +8,17 @@ server.on('request',(req,res)=>{
    //steaming file reading
    const readableSteam = fs.createReadStream(process.cwd() +'/module7/text/read.txt');
    readableSteam.on('data',(buffer)=>{
+    res.statusCode=200;
     res.write(buffer)
    })
    readableSteam.on('end',()=>{
-       res.end('hello from world!')
+    res.statusCode=200;
+       res.end('The streming is over!')
+   })
+   readableSteam.on('error',(error)=>{
+    console.log(error);
+    res.statusCode=500;
+       res.end('something went wrong!')
    })
 })
 server.listen(5000,()=>{
